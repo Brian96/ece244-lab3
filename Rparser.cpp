@@ -213,10 +213,11 @@ void Parser::deleteR(string line){
         if (maxResistors > 0 || maxNodeNumber > 0){
             delete [] nodeList;
             delete [] resisList;
+        
+            nodeList = new Node[maxNodeNumber+1];
+            resisList = new Resistor[maxResistors];
+            numResistors = 0;
         }
-        nodeList = new Node[maxNodeNumber+1];
-        resisList = new Resistor[maxResistors];
-        numResistors = 0;
     }
     cout << "Deleted: all resistors" << endl;
 }
