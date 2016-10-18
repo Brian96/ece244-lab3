@@ -7,14 +7,17 @@
 using namespace std;
 
 Parser::Parser(){
-    nodeList = nullptr;
-    resisList = nullptr;
+    nodeList = NULL;
+    resisList = NULL;
+    maxNodeNumber = 0;
+    maxResistors = 0;
+    numResistors = 0;
 }
 
 Parser::~Parser(){
-    if (nodeList != nullptr)
+    if (nodeList != NULL)
         delete [] nodeList;
-    if (resisList != nullptr)
+    if (resisList != NULL)
         delete [] resisList;
 }
 
@@ -59,7 +62,7 @@ void Parser::setMax(string line){
         cout << "Error: maxVal arguments must be greater than 0" << endl;
         return; //when trying to set either maxR or maxN to 0 or less than 0
     }
-    if (maxResistors >= 0 || maxNodeNumber >= 0){
+    if (maxResistors > 0 || maxNodeNumber > 0){
         delete [] nodeList;
         delete [] resisList;
     }
@@ -194,7 +197,7 @@ void Parser::printNode(string line){
         cout << "Print:" << endl;
         nodeList[node].print(node);
         for (int i = 0; i < numResistors; i++){
-            if (resisList[i].getFirstEnd() == i || resisList[i].getSecondEnd() == i){
+            if (resisList[i].getFirstEnd() == node || resisList[i].getSecondEnd() == node){
                 cout << "  " << resisList[i] << endl;
             }
         }
@@ -207,12 +210,12 @@ void Parser::deleteR(string line){
     ss >> cmd;
     ss >> arg;
     if (arg == "all"){
-        if (maxResistors >= 0 || maxNodeNumber >= 0){
+        if (maxResistors > 0 || maxNodeNumber > 0){
             delete [] nodeList;
             delete [] resisList;
         }
-        maxNodeNumber = 0;
-        maxResistors = 0;
+        nodeList = new Node[maxNodeNumber+1];
+        resisList = new Resistor[maxResistors];
         numResistors = 0;
     }
     cout << "Deleted: all resistors" << endl;
